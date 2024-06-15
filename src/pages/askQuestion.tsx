@@ -5,8 +5,12 @@ import { useState } from "react"
 import { Box } from "@mui/material";
 import  { sendData } from "../config/firebaseMethods";
 import Header from "../layout/header";
+import { useNavigate } from "react-router-dom";
+
 
 function AskQuestion() {
+
+    const navigate = useNavigate()
 
     const [ question, setQuestion] = useState("");
 
@@ -33,6 +37,11 @@ function AskQuestion() {
     <>
             <Header/>
         <Box className="container mt-5   w-50 aligns-items-center">
+
+        <center>
+        <button onClick={()=>{navigate('/')}} className="btn btn-success d-flex fw-bold p-3 align-items-center m-5">Navigate to All Question </button>
+        </center>
+
 
     <Input  value={question}  onChange={(e:any) => {setQuestion(e.target.value);}} label="Ask Question" />
 
