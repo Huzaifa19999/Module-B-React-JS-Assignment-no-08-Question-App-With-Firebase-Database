@@ -20,7 +20,7 @@ function AllQuestion() {
 
     onValue(refernce,(dt) => {
 
-        console.log(dt.val());
+        console.log(Object.values(dt.val()));
       const getQuestion = Object.values(dt.val())
         setAllQuestion([...getQuestion])
 

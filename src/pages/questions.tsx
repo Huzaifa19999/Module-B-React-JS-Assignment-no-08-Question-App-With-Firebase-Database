@@ -18,6 +18,7 @@ function Question() {
   const [allQuestion, setAllQuestion] = useState<QuestionType[]>([]);
   const [answer, setAnswer] = useState<string>("");
   const { id } = useParams<{ id: string }>();
+  const [ getAns, setGetAns] = useState<any>([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +53,7 @@ function Question() {
     if (answer.trim() === "") return;
 
     const givenAns = ref(db, `questions/${id}/answers`);
-    push(givenAns, answer)
+    push(givenAns, answer,)
       .then(() => {
         setAnswer("");
       })
@@ -60,6 +61,14 @@ function Question() {
         console.error("Error posting answer: ", error);
       });
   };
+
+  useEffect(() => {
+    const givenAns = ref(db, `questions/${id}/answers`);
+    onValue(givenAns, (data) => {
+      setGetAns(Object.values(data.val()));
+      console.log(Object.values(data.val())); 
+    });
+  }, [id, db, setGetAns]);
 
   return (
     <>
@@ -81,6 +90,11 @@ function Question() {
           >
             Post your Answer
           </button>
+          <h2 className='mt-4 mb-4'>Posted Answers:</h2>
+          {getAns.map((e:any,i:any) =>(
+            <h3 className='p-5'  key={i}><span className='text-danger mb-5'>Answer No: {i+1}</span>
+            <br /> {e}</h3>
+          ))}
           <br />
           <br />
           
